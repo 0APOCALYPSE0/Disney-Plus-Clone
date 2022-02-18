@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import ImgSlider from './ImgSlider';
 import Viewers from './Viewers';
 import Movies from './Movies';
 import db from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setMovies } from '../features/movie/movieSlice';
+import { selectUser } from '../features/user/userSlice';
 
 function Home() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const name = useSelector(selectUser).name;
+
   useEffect(() => {
+    if(!name){
+      navigate("/login");
+    }
     async function getMovies(){
       const querySnapshot = await getDocs(collection(db, "movies"));
       const tempMovies = [];

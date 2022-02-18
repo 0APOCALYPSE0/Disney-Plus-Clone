@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/user/userSlice';
 
 function Login() {
+
+  const navigate = useNavigate();
+  const name = useSelector(selectUser).name;
+
+  useEffect(() => {
+    if(name){
+      navigate("/");
+    }
+  }, []);
+
   return (
     <Container>
       <Background>
