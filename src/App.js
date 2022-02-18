@@ -8,11 +8,11 @@ import Detail from './components/Detail';
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 function App() {
+
   return (
     <div className="App">
       <Header />
