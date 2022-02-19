@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import ImgSlider from './ImgSlider';
 import Viewers from './Viewers';
-import Movies from './Movies';
+import NewDisney from "./NewDisney";
+import Originals from "./Originals";
+import Recommends from "./Recommends";
+import Trending from "./Trending";
 import db from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,17 +18,45 @@ function Home() {
   const navigate = useNavigate();
   const name = useSelector(selectUser).name;
 
+  let recommends = [];
+  let newDisneys = [];
+  let originals = [];
+  let trending = [];
+
   useEffect(() => {
     if(!name){
       navigate("/login");
     }
     async function getMovies(){
       const querySnapshot = await getDocs(collection(db, "movies"));
-      const tempMovies = [];
       querySnapshot.forEach((doc) => {
-        tempMovies.push({id: doc.id, ...doc.data()});
+        switch (doc.data().type) {
+          case "recommend":
+            recommends = [...recommends, { id: doc.id, ...doc.data() }];
+            break;
+
+          case "new":
+            newDisneys = [...newDisneys, { id: doc.id, ...doc.data() }];
+            break;
+
+          case "original":
+            originals = [...originals, { id: doc.id, ...doc.data() }];
+            break;
+
+          case "trending":
+            trending = [...trending, { id: doc.id, ...doc.data() }];
+            break;
+
+          default:
+            break;
+        }
       });
-      dispatch(setMovies(tempMovies));
+      dispatch(setMovies({
+        recommend: recommends,
+        newDisney: newDisneys,
+        original: originals,
+        trending: trending,
+      }));
     }
     getMovies();
   }, []);
@@ -34,7 +65,10 @@ function Home() {
     <Container>
       <ImgSlider />
       <Viewers />
-      <Movies />
+      <Recommends />
+      <NewDisney />
+      <Originals />
+      <Trending />
     </Container>
   )
 }

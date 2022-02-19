@@ -88,12 +88,17 @@ function Header() {
 export default Header;
 
 const Nav = styled.nav`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   overflow: hidden;
   height: 70px;
   background: #090b13;
   display: flex;
   align-items: center;
   padding: 0 36px;
+  z-index: 3;
 `
 
 const Logo = styled.img`

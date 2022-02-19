@@ -39,28 +39,30 @@ function Detail() {
           <ImageTitle>
             <img src={movie.titleImg} alt={movie.title} />
           </ImageTitle>
-          <Controls>
-            <PlayButton>
-              <img src='/images/play-icon-black.png' alt='' />
-              <span>PLAY</span>
-            </PlayButton>
-            <TrailerButton>
-            <img src='/images/play-icon-white.png' alt='' />
-            <span>TRAILER</span>
-            </TrailerButton>
-            <AddButton>
-              <span>+</span>
-            </AddButton>
-            <GroupWatchButton>
-              <img src='/images/group-icon.png' alt='' />
-            </GroupWatchButton>
-          </Controls>
-          <SubTitle>
-            {movie.subTitle}
-          </SubTitle>
-          <Description>
-            {movie.description}
-          </Description>
+          <ContentMeta>
+            <Controls>
+              <PlayButton>
+                <img src='/images/play-icon-black.png' alt='' />
+                <span>PLAY</span>
+              </PlayButton>
+              <TrailerButton>
+              <img src='/images/play-icon-white.png' alt='' />
+              <span>TRAILER</span>
+              </TrailerButton>
+              <AddButton>
+                <span>+</span>
+              </AddButton>
+              <GroupWatchButton>
+                <img src='/images/group-icon.png' alt='' />
+              </GroupWatchButton>
+            </Controls>
+            <SubTitle>
+              {movie.subTitle}
+            </SubTitle>
+            <Description>
+              {movie.description}
+            </Description>
+          </ContentMeta>
         </>
         )
       }
@@ -74,12 +76,12 @@ const Container = styled.div`
   min-height: calc(100vh - 70px);
   padding: 0 calc(3.5vw + 5px);
   position: relative;
+  top: 70px;
 `
 
 const Background = styled.div`
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
   right: 0;
   z-index: -1;
@@ -88,25 +90,39 @@ const Background = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    @media (max-width: 768px) {
+      width: initial;
+    }
   }
 `
 
 const ImageTitle = styled.div`
+  margin-top: 150px;
+  align-items: flex-end;
+  display: flex;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
   height: 30vh;
-  width: 35vw;
   min-height: 170px;
-  min-width: 200px;
-  margin-top: 60px;
+  padding-bottom: 24px;
+  width: 100%;
   img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    max-width: 600px;
+    min-width: 200px;
+    width: 35vw;
   }
 `
+
+const ContentMeta = styled.div`
+  max-width: 874px;
+`;
 
 const Controls = styled.div`
   display: flex;
   align-items: center;
+  flex-flow: row nowrap;
+  margin: 24px 0px;
+  min-height: 56px;
 `
 
 const PlayButton = styled.button`
